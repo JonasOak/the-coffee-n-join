@@ -36,20 +36,22 @@ $resultado = mysqli_fetch_all($query, MYSQLI_ASSOC);
                                 <label for="exampleFormControlInput1" class="form-label"><strong>Categoria</strong></label>-->
                                 <label for="select" class="form-label"></label>
                                 <select class="form-select" name="categoria" required="">
-                                    <option></option>
                                     <?php
+                                    $temRoupa = false;
+                                    $temAlimento = false;
+                                    
                                     foreach ($resultado as $produtos) {
-                                        if (isset($produtos['categoria']) and $produtos['categoria'] == 'roupa') {
-                                            echo "
-                                                    <option value='{$produtos['categoria']}'>{$produtos['categoria']}</option>
-                                                    ";
+                                        if (isset($produtos['categoria'])) {
+                                            if ($produtos['categoria'] == 'roupa') {
+                                                $temRoupa = true;
+                                            }
+                                            if ($produtos['categoria'] == 'alimento') {
+                                                $temAlimento = true;
+                                            }
                                         }
-                                        if (isset($produtos['categoria']) and $produtos['categoria'] == 'alimento') {
-                                            echo "
-                                                    <option value='{$produtos['categoria']}'>{$produtos['categoria']}</option>
-                                                    ";
-                                        }
-                                    }
+                                    }    
+                                    echo "<option value='roupa'" . ($temRoupa ? " selected" : "") . ">roupa</option>";
+                                    echo "<option value='alimento'" . ($temAlimento ? " selected" : "") . ">alimento</option>";
                                     ?>
                                     <div class="invalid-feedback">
                                         Por favor, selecione um produto válido.
